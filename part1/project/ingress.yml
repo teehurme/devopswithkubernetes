@@ -6,10 +6,17 @@ spec:
   rules:
   - http:
       paths:
+      - path: /pingpong
+        pathType: Prefix
+        backend:
+          service:
+            name: pong-svc
+            port:
+              number: 1234
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: web-server
+            name: project-svc
             port:
               number: 1234
