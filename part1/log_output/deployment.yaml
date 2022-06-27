@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes: # Define volume
+        - name: shared-file
+          emptyDir: {}
+      containers:
+        - name: reader
+          image: teeh/reader
+          volumeMounts: # Mount volume
+          - name: shared-file
+            mountPath: /usr/src/app/files
+        - name: writer
+          image: teeh/writer
+          volumeMounts: # Mount volume
+          - name: shared-file
+            mountPath: /usr/src/app/files
