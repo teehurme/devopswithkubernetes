@@ -14,7 +14,8 @@ spec:
     spec:
       volumes: # Define volume
         - name: shared-file
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: ponglog
       containers:
         - name: reader
           image: teeh/reader

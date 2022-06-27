@@ -12,6 +12,13 @@ spec:
       labels:
         app: pong
     spec:
+      volumes: # Define volume
+        - name: shared-file
+          persistentVolumeClaim:
+            claimName: ponglog
       containers:
         - name: pong
           image: teeh/pong
+          volumeMounts: # Mount volume
+          - name: shared-file
+            mountPath: /usr/src/app/files
