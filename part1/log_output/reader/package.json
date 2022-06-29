@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "reader.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node reader.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "express": "^4.18.1"
   }
 }

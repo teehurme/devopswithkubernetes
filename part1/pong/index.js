@@ -14,6 +14,12 @@ app.get('/pingpong',async (req,res)=>{
     res.send(`PING  / PONGS: ${count}`)
 })
 
+app.get('/count', async(req, res) => {
+    const data = (await fs.readFile(FILEPATH).catch((err)=>console.log(err)))
+    const count =  data ? Number.parseInt(data,10) : 0
+    res.send(`${count}`)
+})
+
 app.listen(PORT,()=>{
     console.log(`Pong server listening on port ${PORT}`)
 })
