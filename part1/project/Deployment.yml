@@ -12,6 +12,13 @@ spec:
       labels:
         app: web-server
     spec:
+      volumes: 
+        - name: images
+          persistentVolumeClaim:
+            claimName: ponglog
       containers:
         - name: web-server
           image: teeh/webserver
+          volumeMounts: # Mount volume
+          - name: images
+            mountPath: /usr/src/app/public/images
