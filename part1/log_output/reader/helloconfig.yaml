@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  MESSAGE: HELLO
+kind: ConfigMap
+metadata:
+  name: helloconfig
+  namespace: exercises
+  

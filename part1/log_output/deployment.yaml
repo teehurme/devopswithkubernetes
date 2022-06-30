@@ -20,6 +20,12 @@ spec:
       containers:
         - name: reader
           image: teeh/reader
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: helloconfig
+                  key: MESSAGE
           volumeMounts: # Mount volume
           - name: shared-file
             mountPath: /usr/src/app/files
