@@ -37,8 +37,17 @@ res.json(todos)
 });
 
 app.post('/todos', async (req,res)=> {
+    try{
+    if(req.body.todo.length>140){
+        console.log('over 140 characters todos are not allowed')
+        return res.sendStatus(405)
+    }
     const r = await Todo.create({todo: req.body.todo});
+    console.log('Todo added', r.toJSON())
     res.status(201).json(r)
+    }catch(err){
+        console.log(err)
+    }
 });
 app.listen(PORT,()=>{
     console.log(`todo backend started on port ${PORT}`)
