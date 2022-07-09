@@ -1,19 +1,44 @@
 import express from 'express'
 import { randomUUID } from 'node:crypto'
+import { Sequelize, QueryTypes, Model, DataTypes} from 'sequelize'
+const DATABASE_URL = process.env.DATABASE_URL ?? 'postgres://postgres:password@localhost:5432'
+const sequelize = new Sequelize(DATABASE_URL, {
+    dialectOptions: {
+    },
+});
+
+class Todo extends Model {}
+Todo.init(
+    { 
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        todo: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+    },{
+        sequelize,
+        underscored: true,
+        timestamps: false,
+        modelName: 'todo'
+    })
+
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT ?? '8000'
-const todos = [];
-
 
 app.get('/todos', async (req, res)=>{
-    res.json(todos)
+const todos = await Todo.findAll()
+res.json(todos)
 });
 
 app.post('/todos', async (req,res)=> {
-    todos.push({id: randomUUID(), todo: req.body.todo})
-    res.status(201).json(todos)
+    const r = await Todo.create({todo: req.body.todo});
+    res.status(201).json(r)
 });
 app.listen(PORT,()=>{
     console.log(`todo backend started on port ${PORT}`)
