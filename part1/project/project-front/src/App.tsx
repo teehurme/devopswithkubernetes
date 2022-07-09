@@ -18,6 +18,7 @@ function App() {
 
   const submit=async (event:React.FormEvent)=>{
     event.preventDefault();
+    if(inputState.length>140) return
     await axios.post('http://localhost/todos/', { todo: inputState });
     getTodos()
       .then((todos)=>setTodos(todos))
