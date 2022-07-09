@@ -1,0 +1,16 @@
+{
+  "name": "todobackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dailytodo.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dailytodo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
