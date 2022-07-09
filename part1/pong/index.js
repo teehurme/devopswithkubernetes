@@ -1,22 +1,38 @@
 import express from 'express'
-import { promises as fs } from  'fs';
+import  { Sequelize, Model, DataTypes }  from 'sequelize'
 
 const PORT = process.env.PORT ?? 8000
-let count = 0
-const FILEPATH=process.env.FILEPATH ?? './files/pongs'
+
 
 const app = express();
 
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+    },
+  });
+
+class Pong extends Model {}
+Pong.init({
+    count: { type: DataTypes.INTEGER },
+    },
+    {
+        sequelize,
+        underscored: true,
+        timestamps: false,
+        modelName: 'pong'
+    })
+
 app.get('/pingpong',async (req,res)=>{
-    const data = (await fs.readFile(FILEPATH).catch((err)=>console.log(err)))
-    const count =  data ? Number.parseInt(data,10) : 0
-    await fs.writeFile(FILEPATH,`${count+1}`)
+    const result = await Pong.findByPk(1);
+    const count = result.count
+    result.count=count +1
+    result.save();
     res.send(`PING  / PONGS: ${count}`)
 })
 
 app.get('/count', async(req, res) => {
-    const data = (await fs.readFile(FILEPATH).catch((err)=>console.log(err)))
-    const count =  data ? Number.parseInt(data,10) : 0
+    const result = await Pong.findByPk(1);
+    const count = result.count
     res.send(`${count}`)
 })
 
