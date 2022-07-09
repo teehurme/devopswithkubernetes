@@ -5,10 +5,11 @@ import { stat } from 'fs/promises'
 const FILEPATH=process.env.FILEPATH ?? './public/images/daily.jpg'
 
 async function fetchTodaysImage()   { 
-    const date = (await stat(FILEPATH).catch(()=>{}))?.birthtime
+    const date = (await stat(FILEPATH).catch(()=>{}))?.mtime
     const currentDate = (new Date()).toDateString()
     const imageDate = (new Date(date)).toDateString()
 
+    console.log(currentDate,imageDate)
     const isTodaysImage = currentDate === imageDate;
     return new Promise((resolve,reject)=>{
     if(!isTodaysImage) {
