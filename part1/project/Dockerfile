@@ -1,5 +1,8 @@
 FROM node:17-alpine 
 WORKDIR /usr/src/app
-COPY . .
+COPY package.json .
+COPY package-lock.json .
+COPY getImage.js .
+COPY server.js .
 RUN npm install
 ENTRYPOINT [ "npm","start" ]
